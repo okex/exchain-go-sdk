@@ -16,7 +16,7 @@ import (
 )
 
 const (
-	rpcURL = "tcp://127.0.0.1:36657"
+	rpcURL = "tcp://127.0.0.1:26657"
 	// user's name
 	name = "admin17"
 	// user's mnemonic
@@ -41,7 +41,7 @@ func main() {
 	//}
 
 	// WAY 2: alternative client config with the fees by auto gas calculation
-	config, err := gosdk.NewClientConfig(rpcURL, "exchain-101", gosdk.BroadcastSync, "0.000001okt", 450000,
+	config, err := gosdk.NewClientConfig(rpcURL, "exchain-100", gosdk.BroadcastBlock, "0.000001okt", 450000,
 		1.1, "0.000000000000000012okt")
 	if err != nil {
 		log.Fatal(err)
@@ -104,7 +104,7 @@ func testTransfer(ibc exposed.Ibc, accountNum, sequenceNum uint64) {
 	fee := sdk.NewCoinAdapter("wei", sdk.NewInt(45000000000000))
 	fees := []sdk.CoinAdapter{fee}
 
-	res, err := ibc.Transfer(secp256k12.GenPrivKeySecp256k1(d), "channel-0", addr, "1000okt", fees, "memo", client_types.Height{RevisionNumber: 101, RevisionHeight: 10000})
+	res, err := ibc.Transfer(secp256k12.GenPrivKeySecp256k1(d), "channel-0", addr, "1okt", fees, "memo", client_types.Height{RevisionNumber: 101, RevisionHeight: 10000})
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -20,7 +20,7 @@ func (fc farmClient) CreatePool(fromInfo keys.Info, passWd, poolName, minLockAmo
 	}
 
 	msg := farmtypes.NewMsgCreatePool(fromInfo.GetAddress(), poolName, minLockAmount, yieldToken)
-	return fc.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return fc.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }
 
 // DestroyPool destroys a farm pool
@@ -31,7 +31,7 @@ func (fc farmClient) DestroyPool(fromInfo keys.Info, passWd, poolName, memo stri
 	}
 
 	msg := farmtypes.NewMsgDestroyPool(fromInfo.GetAddress(), poolName)
-	return fc.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return fc.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }
 
 // Provide provides a number of yield tokens into a pool
@@ -52,7 +52,7 @@ func (fc farmClient) Provide(fromInfo keys.Info, passWd, poolName, amountStr, yi
 	}
 
 	msg := farmtypes.NewMsgProvide(poolName, fromInfo.GetAddress(), amount, amountYieldPerBlock, startHeightToYield)
-	return fc.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return fc.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }
 
 // Lock locks a number of tokens for yield farming
@@ -68,7 +68,7 @@ func (fc farmClient) Lock(fromInfo keys.Info, passWd, poolName, amountStr, memo 
 	}
 
 	msg := farmtypes.NewMsgLock(poolName, fromInfo.GetAddress(), amount)
-	return fc.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return fc.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }
 
 // Unlock unlocks a number of tokens from the farm pool and claims the current yield
@@ -84,7 +84,7 @@ func (fc farmClient) Unlock(fromInfo keys.Info, passWd, poolName, amountStr, mem
 	}
 
 	msg := farmtypes.NewMsgUnlock(poolName, fromInfo.GetAddress(), amount)
-	return fc.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return fc.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }
 
 // Claim claims yield farming rewards
@@ -95,5 +95,5 @@ func (fc farmClient) Claim(fromInfo keys.Info, passWd, poolName, memo string, ac
 	}
 
 	msg := farmtypes.NewMsgClaim(poolName, fromInfo.GetAddress())
-	return fc.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return fc.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }

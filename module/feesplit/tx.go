@@ -35,7 +35,7 @@ func (c feesplitClient) RegisterFeeSplit(fromInfo keys.Info, passWd string, accN
 		return nil, err
 	}
 
-	res, err := c.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	res, err := c.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +57,7 @@ func (c feesplitClient) CancelFeeSplit(fromInfo keys.Info, passWd string, accNum
 		return nil, err
 	}
 
-	res, err := c.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	res, err := c.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 	if err != nil {
 		return nil, err
 	}
@@ -84,7 +84,7 @@ func (c feesplitClient) UpdateFeeSplit(fromInfo keys.Info, passWd string, accNum
 		return nil, err
 	}
 
-	res, err := c.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	res, err := c.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 	if err != nil {
 		return nil, err
 	}

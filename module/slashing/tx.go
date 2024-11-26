@@ -15,5 +15,5 @@ func (sc slashingClient) Unjail(fromInfo keys.Info, passWd, memo string, accNum,
 	}
 
 	msg := slashing.NewMsgUnjail(sdk.ValAddress(fromInfo.GetAddress()))
-	return sc.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return sc.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }

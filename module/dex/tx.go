@@ -18,7 +18,7 @@ func (dc dexClient) List(fromInfo keys.Info, passWd, baseAsset, quoteAsset, init
 
 	initPrice := sdk.MustNewDecFromStr(initPriceStr)
 	msg := dextypes.NewMsgList(fromInfo.GetAddress(), baseAsset, quoteAsset, initPrice)
-	return dc.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return dc.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }
 
 // Deposit deposits some tokens to a specific product
@@ -34,7 +34,7 @@ func (dc dexClient) Deposit(fromInfo keys.Info, passWd, product, amountStr, memo
 	}
 
 	msg := dextypes.NewMsgDeposit(product, amount, fromInfo.GetAddress())
-	return dc.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return dc.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }
 
 // Withdraw withdraws some tokens from a specific product
@@ -50,7 +50,7 @@ func (dc dexClient) Withdraw(fromInfo keys.Info, passWd, product, amountStr, mem
 	}
 
 	msg := dextypes.NewMsgWithdraw(product, amount, fromInfo.GetAddress())
-	return dc.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return dc.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }
 
 // TransferOwnership changes the owner of a product
@@ -66,7 +66,7 @@ func (dc dexClient) TransferOwnership(fromInfo keys.Info, passWd, product, toAdd
 	}
 
 	msg := dextypes.NewMsgTransferOwnership(fromInfo.GetAddress(), toAddr, product)
-	return dc.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return dc.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }
 
 // ConfirmOwnership confirms the transfer-ownership of a product
@@ -76,7 +76,7 @@ func (dc dexClient) ConfirmOwnership(fromInfo keys.Info, passWd, product, memo s
 	}
 
 	msg := dextypes.NewMsgConfirmOwnership(fromInfo.GetAddress(), product)
-	return dc.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return dc.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }
 
 func (dc dexClient) RegisterDexOperator(fromInfo keys.Info, passWd, handleFeeAddrStr, website, memo string, accNum, seqNum uint64) (
@@ -91,7 +91,7 @@ func (dc dexClient) RegisterDexOperator(fromInfo keys.Info, passWd, handleFeeAdd
 	}
 
 	msg := dextypes.NewMsgCreateOperator(website, fromInfo.GetAddress(), handleFeeAddr)
-	return dc.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return dc.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }
 
 func (dc dexClient) EditDexOperator(fromInfo keys.Info, passWd, handleFeeAddrStr, website, memo string, accNum, seqNum uint64) (
@@ -106,5 +106,5 @@ func (dc dexClient) EditDexOperator(fromInfo keys.Info, passWd, handleFeeAddrStr
 	}
 
 	msg := dextypes.NewMsgUpdateOperator(website, fromInfo.GetAddress(), handleFeeAddr)
-	return dc.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return dc.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }

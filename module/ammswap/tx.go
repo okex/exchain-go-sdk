@@ -38,7 +38,7 @@ func (ac ammswapClient) AddLiquidity(fromInfo keys.Info, passWd, minLiquidity, m
 	deadline := time.Now().Add(duration).Unix()
 
 	msg := ammswaptypes.NewMsgAddLiquidity(minLiquidityDec, maxBaseAmountDecCoin, quoteAmountDecCoin, deadline, fromInfo.GetAddress())
-	return ac.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return ac.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }
 
 // RemoveLiquidity removes the number of liquidity of a token pair
@@ -70,7 +70,7 @@ func (ac ammswapClient) RemoveLiquidity(fromInfo keys.Info, passWd, liquidity, m
 	deadline := time.Now().Add(duration).Unix()
 
 	msg := ammswaptypes.NewMsgRemoveLiquidity(liquidityDec, minBaseAmountDecCoin, minQuoteAmountDecCoin, deadline, fromInfo.GetAddress())
-	return ac.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return ac.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }
 
 // CreateExchange creates a token pair in swap module
@@ -81,7 +81,7 @@ func (ac ammswapClient) CreateExchange(fromInfo keys.Info, passWd, baseToken, qu
 	}
 
 	msg := ammswaptypes.NewMsgCreateExchange(baseToken, quoteToken, fromInfo.GetAddress())
-	return ac.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return ac.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }
 
 // TokenSwap swaps the number of specific token with another type token
@@ -117,5 +117,5 @@ func (ac ammswapClient) TokenSwap(fromInfo keys.Info, passWd, soldTokenAmount, m
 	}
 
 	msg := ammswaptypes.NewMsgTokenToToken(soldTokenDecCoin, minBoughtTokenDecCoin, deadline, recip, fromInfo.GetAddress())
-	return ac.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return ac.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }

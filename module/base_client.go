@@ -7,6 +7,9 @@ import (
 	"github.com/okex/exchain-go-sdk/types"
 	"github.com/okex/exchain-go-sdk/types/tx"
 	"github.com/okex/exchain-go-sdk/utils"
+
+	extypes "github.com/okex/exchain/libs/tendermint/types"
+
 	"github.com/okex/exchain/libs/cosmos-sdk/codec"
 	sdk "github.com/okex/exchain/libs/cosmos-sdk/types"
 	authtypes "github.com/okex/exchain/libs/cosmos-sdk/x/auth/types"
@@ -104,7 +107,7 @@ func (bc *baseClient) GetConfig() types.ClientConfig {
 	return *bc.config
 }
 
-// BuildAndBroadcast implements the TxHandler interface
+// BuildAndBroadcast implements the TxHandler interface ; abandonded
 func (bc *baseClient) BuildAndBroadcast(fromName, passphrase, memo string, msgs []sdk.Msg, accNumber,
 	seqNumber uint64) (resp sdk.TxResponse, err error) {
 	stdTx, err := bc.BuildStdTx(fromName, passphrase, memo, msgs, accNumber, seqNumber)
@@ -118,6 +121,32 @@ func (bc *baseClient) BuildAndBroadcast(fromName, passphrase, memo string, msgs 
 	}
 
 	return bc.Broadcast(bytes, bc.GetConfig().BroadcastMode)
+}
+
+// BuildAndBroadcast implements the TxHandler interface
+func (bc *baseClient) BuildAndBroadcastWithNonce(fromName, passphrase, memo string, msgs []sdk.Msg, accNumber,
+	seqNumber uint64) (resp sdk.TxResponse, err error) {
+	stdTx, err := bc.BuildStdTx(fromName, passphrase, memo, msgs, accNumber, seqNumber)
+	if err != nil {
+		return resp, fmt.Errorf("failed. build stdTx error: %s", err)
+	}
+
+	bytes, err := bc.cdc.MarshalBinaryLengthPrefixed(stdTx)
+	if err != nil {
+		return resp, fmt.Errorf("failed. encoded stdTx error: %s", err)
+	}
+
+	wrapedTx := &extypes.WrapCMTx{
+		Tx:    bytes,
+		Nonce: seqNumber,
+	}
+	txBytes, err := bc.cdc.MarshalJSON(wrapedTx)
+	if err != nil {
+		panic(fmt.Sprintln("MarshalJSON fail", err))
+	}
+
+	return bc.Broadcast(txBytes, bc.GetConfig().BroadcastMode)
+	// return bc.Broadcast(bytes, bc.GetConfig().BroadcastMode)
 }
 
 // BuildAndSign builds std sign context and sign it

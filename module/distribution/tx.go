@@ -22,7 +22,7 @@ func (dc distrClient) SetWithdrawAddr(fromInfo keys.Info, passWd, withdrawAddrSt
 	}
 
 	msg := distrtypes.NewMsgSetWithdrawAddress(fromInfo.GetAddress(), withdrawAddr)
-	return dc.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return dc.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }
 
 // WithdrawRewards withdraws the rewards of validator by himself
@@ -38,5 +38,5 @@ func (dc distrClient) WithdrawRewards(fromInfo keys.Info, passWd, valAddrStr, me
 	}
 
 	msg := distrtypes.NewMsgWithdrawValidatorCommission(valAddr)
-	return dc.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return dc.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }

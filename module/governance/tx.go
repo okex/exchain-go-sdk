@@ -39,7 +39,7 @@ func (gc govClient) SubmitTextProposal(fromInfo keys.Info, passWd, proposalPath,
 		fromInfo.GetAddress(),
 	)
 
-	return gc.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return gc.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }
 
 // SubmitParamChangeProposal submits the proposal to change the params on ExChain
@@ -65,7 +65,7 @@ func (gc govClient) SubmitParamsChangeProposal(fromInfo keys.Info, passWd, propo
 		fromInfo.GetAddress(),
 	)
 
-	return gc.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return gc.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }
 
 // SubmitDelistProposal submits the proposal to delist a token pair from dex
@@ -92,7 +92,7 @@ func (gc govClient) SubmitDelistProposal(fromInfo keys.Info, passWd, proposalPat
 		fromInfo.GetAddress(),
 	)
 
-	return gc.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return gc.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }
 
 // SubmitCommunityPoolSpendProposal submits the proposal to spend the tokens from the community pool on ExChain
@@ -118,7 +118,7 @@ func (gc govClient) SubmitCommunityPoolSpendProposal(fromInfo keys.Info, passWd,
 		fromInfo.GetAddress(),
 	)
 
-	return gc.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return gc.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }
 
 // SubmitManageWhiteList submits the proposal to manage the white list member of farm module
@@ -144,7 +144,7 @@ func (gc govClient) SubmitManageWhiteListProposal(fromInfo keys.Info, passWd, pr
 		fromInfo.GetAddress(),
 	)
 
-	return gc.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return gc.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }
 
 // Deposit increases the deposit amount on a specific proposal
@@ -160,7 +160,7 @@ func (gc govClient) Deposit(fromInfo keys.Info, passWd, depositCoinsStr, memo st
 	}
 
 	msg := govtypes.NewMsgDeposit(fromInfo.GetAddress(), proposalID, deposit)
-	return gc.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return gc.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }
 
 // Vote votes for an active proposal
@@ -177,5 +177,5 @@ func (gc govClient) Vote(fromInfo keys.Info, passWd, voteOption, memo string, pr
 	}
 
 	msg := govtypes.NewMsgVote(fromInfo.GetAddress(), proposalID, byteVoteOption)
-	return gc.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return gc.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }

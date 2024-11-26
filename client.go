@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/okex/exchain-go-sdk/module/feesplit"
 	"github.com/okex/exchain-go-sdk/module/ibc"
+	"github.com/okex/exchain-go-sdk/module/wasm"
 	ibcTypes "github.com/okex/exchain/libs/ibc-go/modules/apps/transfer/types"
 	feesplitTypes "github.com/okex/exchain/x/feesplit/types"
 
@@ -35,6 +36,7 @@ import (
 	gosdktypes "github.com/okex/exchain-go-sdk/types"
 	"github.com/okex/exchain/libs/cosmos-sdk/codec"
 	farmtypes "github.com/okex/exchain/x/farm/types"
+	wasmTypes "github.com/okex/exchain/x/wasm/types"
 )
 
 // Client - structure of the main client of ExChain GoSDK
@@ -68,6 +70,7 @@ func NewClient(config gosdktypes.ClientConfig) Client {
 		token.NewTokenClient(pBaseClient),
 		tendermint.NewTendermintClient(pBaseClient),
 		ibc.NewIbcClient(pBaseClient),
+		wasm.NewWasmClient(pBaseClient),
 		feesplit.NewfeesplitClient(pBaseClient),
 	)
 
@@ -135,6 +138,9 @@ func (cli *Client) Ibc() exposed.Ibc {
 	return cli.modules[ibcTypes.ModuleName].(exposed.Ibc)
 }
 
+func (cli *Client) Wasm() exposed.Wasm {
+	return cli.modules[wasmTypes.ModuleName].(exposed.Wasm)
+}
 func (cli *Client) Feesplit() exposed.Feesplit {
 	return cli.modules[feesplitTypes.ModuleName].(exposed.Feesplit)
 }

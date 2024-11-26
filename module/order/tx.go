@@ -32,7 +32,7 @@ func (oc orderClient) NewOrders(fromInfo keys.Info, passWd, products, sides, pri
 	}
 
 	msg := ordertypes.NewMsgNewOrders(fromInfo.GetAddress(), orderItems)
-	return oc.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return oc.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }
 
 // CancelOrders cancels orders by orderIDs
@@ -48,5 +48,5 @@ func (oc orderClient) CancelOrders(fromInfo keys.Info, passWd, orderIDs, memo st
 	}
 
 	msg := ordertypes.NewMsgCancelOrders(fromInfo.GetAddress(), orderIDStrs)
-	return oc.BuildAndBroadcast(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
+	return oc.BuildAndBroadcastWithNonce(fromInfo.GetName(), passWd, memo, []sdk.Msg{msg}, accNum, seqNum)
 }
